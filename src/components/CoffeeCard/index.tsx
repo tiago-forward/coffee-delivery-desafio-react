@@ -8,8 +8,22 @@ import {
   PriceContainer,
 } from './styles'
 
-export function CoffeeCard({ image, category, name, description, value }) {
-  const [coffeeQuantity, setCoffeeQuantity] = useState(1)
+interface CoffeeCardProps {
+  image: string
+  category: string[]
+  name: string
+  description: string
+  value: string
+}
+
+export function CoffeeCard({
+  image,
+  category,
+  name,
+  description,
+  value,
+}: CoffeeCardProps) {
+  const [coffeeQuantity, setCoffeeQuantity] = useState<number>(1)
 
   return (
     <CoffeeCardContainer>
@@ -27,7 +41,10 @@ export function CoffeeCard({ image, category, name, description, value }) {
         <p>
           R$ <span>{value}</span>
         </p>
-        <InputNumber value={coffeeQuantity} onChange={setCoffeeQuantity} />
+        <InputNumber
+          coffeeQuantity={coffeeQuantity}
+          setCoffeeQuantity={setCoffeeQuantity}
+        />
         <ButtonCart />
       </PriceContainer>
     </CoffeeCardContainer>

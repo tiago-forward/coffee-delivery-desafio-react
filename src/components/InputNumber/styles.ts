@@ -18,10 +18,6 @@ export const NumberInputContainer = styled.div`
     font-size: 16px;
     color: ${(props) => props.theme.colors.purple};
     font-size: 0.875rem;
-
-    &:hover {
-      /* background: #ddd; */
-    }
   }
 
   input {
@@ -29,7 +25,6 @@ export const NumberInputContainer = styled.div`
     text-align: center;
     width: 1.25rem;
     font-size: 16px;
-    -moz-appearance: textfield;
     background-color: ${(props) => props.theme.colors['base-button']};
     ${mixins.fonts.textM};
 

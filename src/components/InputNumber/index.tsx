@@ -1,17 +1,31 @@
 import { Minus, Plus } from 'phosphor-react'
 import { NumberInputContainer } from './styles'
+import { ChangeEvent } from 'react'
 
-export function InputNumber({ value, onChange }) {
+interface InputNumberProps {
+  coffeeQuantity: number
+  setCoffeeQuantity: (coffeeQuantity: number) => void
+}
+
+export function InputNumber({
+  coffeeQuantity,
+  setCoffeeQuantity,
+}: InputNumberProps) {
   const handleDecrement = () => {
-    if (value > 1) {
-      onChange(value - 1)
+    if (coffeeQuantity > 1) {
+      setCoffeeQuantity(coffeeQuantity - 1)
     }
   }
 
   const handleIncrement = () => {
-    if (value < 10) {
-      onChange(value + 1)
+    if (coffeeQuantity < 10) {
+      setCoffeeQuantity(coffeeQuantity + 1)
     }
+  }
+
+  function handleValueInput(event: ChangeEvent<HTMLInputElement>) {
+    const valueInput = parseInt(event.target.value)
+    setCoffeeQuantity(valueInput)
   }
 
   return (
@@ -21,9 +35,9 @@ export function InputNumber({ value, onChange }) {
       </button>
       <input
         type="number"
-        value={value}
+        value={coffeeQuantity}
         min={0}
-        onChange={(e) => onChange(parseInt(e.target.value, 10))}
+        onChange={handleValueInput}
       />
       <button onClick={handleIncrement}>
         <Plus />
