@@ -1,7 +1,11 @@
+import { OurCoffees } from './Components/OurCoffees'
+
+import { HomePageContainer } from './styles'
+
 export function Home() {
   return (
-    <>
-      <h1>Home</h1>
-    </>
+    <HomePageContainer>
+      <OurCoffees />
+    </HomePageContainer>
   )
 }
