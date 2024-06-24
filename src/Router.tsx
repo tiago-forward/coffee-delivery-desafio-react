@@ -6,7 +6,6 @@ import { Success } from './pages/Success'
 import { Checkout } from './pages/Checkout'
 import { CheckoutFilled } from './pages/CheckoutFilled'
 
-
 export function Router() {
   return (
     <Routes>

@@ -1,4 +1,3 @@
-
 import { createGlobalStyle } from 'styled-components'
 import { mixins } from './mixins'
 
