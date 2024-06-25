@@ -13,6 +13,8 @@ import ImageLatte from '../assets/coffee/ImageLatte.svg'
 import ImageMacchiato from '../assets/coffee/ImageMacchiato.svg'
 import ImageMochaccino from '../assets/coffee/ImageMochaccino.svg'
 
+import { ShoppingCart, Package, Timer, Coffee } from 'phosphor-react'
+
 export const coffees = [
   {
     id: 1,
@@ -129,5 +131,32 @@ export const coffees = [
     name: 'Irlandês',
     description: 'Bebida a base de café, uísque irlandês, açúcar e chantilly',
     value: '9,90',
+  },
+]
+
+export const itemsQuality = [
+  {
+    id: 1,
+    icon: ShoppingCart,
+    text: 'Compra simples e segura',
+    color: '#C47F17',
+  },
+  {
+    id: 2,
+    icon: Package,
+    text: 'Embalagem mantém o café intacto',
+    color: '#574F4D',
+  },
+  {
+    id: 3,
+    icon: Timer,
+    text: 'Entrega rápida e rastreada',
+    color: '#DBAC2C',
+  },
+  {
+    id: 4,
+    icon: Coffee,
+    text: 'O café chega fresquinho até você',
+    color: '#8047F8',
   },
 ]
