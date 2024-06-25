@@ -45,13 +45,17 @@ export const HeaderContainer = styled.header`
 
       span {
         font-size: 0.8rem;
-        width: 1.25rem;
-        height: 1.25rem;
+        width: 1.375rem;
+        height: 1.475rem;
         position: absolute;
-        top: -0.5rem;
-        right: -0.9rem;
+        top: -0.6rem;
+        right: -0.6rem;
         border-radius: 50%;
         color: ${(props) => props.theme.colors['yellow-light']};
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       &::before {

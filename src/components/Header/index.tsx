@@ -16,9 +16,9 @@ export function Header() {
           <MapPin size={22} />
           <span>Campina Grande, PB</span>
         </NavLink>
-        <NavLink to="/history" title="Cart" className="cart">
+        <NavLink to="/" title="Cart" className="cart">
           <ShoppingCart size={22} />
-          <span>3</span>
+          <span>0</span>
         </NavLink>
       </nav>
     </HeaderContainer>

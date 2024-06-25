@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { mixins } from '../../../../styles/mixins'
 
 export const OurCoffeesSection = styled.section`
+  margin-top: 4.125rem;
   h2 {
     ${mixins.fonts.titleL};
     color: ${(props) => props.theme.colors['base-subtitle']};
