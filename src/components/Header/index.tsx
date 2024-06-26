@@ -9,14 +9,16 @@ export function Header() {
   return (
     <HeaderContainer>
       <span>
-        <img src={logoCoffeeDelivery} alt="" />
+        <NavLink to="/">
+          <img src={logoCoffeeDelivery} alt="" />
+        </NavLink>
       </span>
       <nav>
         <NavLink to="/" title="Map" className="map">
           <MapPin size={22} />
           <span>Campina Grande, PB</span>
         </NavLink>
-        <NavLink to="/" title="Cart" className="cart">
+        <NavLink to="/checkout" title="Cart" className="cart">
           <ShoppingCart size={22} />
           <span>0</span>
         </NavLink>
