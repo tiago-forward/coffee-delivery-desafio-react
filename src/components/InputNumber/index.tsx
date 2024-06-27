@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react'
 
 interface InputNumberProps {
   coffeeQuantity: number
-  setCoffeeQuantity: (coffeeQuantity: number) => void
+  setCoffeeQuantity?: (coffeeQuantity: number) => void
 }
 
 export function InputNumber({
@@ -12,20 +12,22 @@ export function InputNumber({
   setCoffeeQuantity,
 }: InputNumberProps) {
   const handleDecrement = () => {
-    if (coffeeQuantity > 1) {
+    if (coffeeQuantity > 1 && setCoffeeQuantity) {
       setCoffeeQuantity(coffeeQuantity - 1)
     }
   }
 
   const handleIncrement = () => {
-    if (coffeeQuantity < 10) {
+    if (coffeeQuantity < 10 && setCoffeeQuantity) {
       setCoffeeQuantity(coffeeQuantity + 1)
     }
   }
 
   function handleValueInput(event: ChangeEvent<HTMLInputElement>) {
     const valueInput = parseInt(event.target.value)
-    setCoffeeQuantity(valueInput)
+    if (setCoffeeQuantity) {
+      setCoffeeQuantity(valueInput)
+    }
   }
 
   return (

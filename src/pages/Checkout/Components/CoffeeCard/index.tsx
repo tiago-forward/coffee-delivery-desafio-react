@@ -3,9 +3,9 @@ import { CheckoutCoffeeCardContainer } from './styles'
 
 interface CheckoutCoffeeCardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode
-  icon: ReactElement
-  title: string
-  subtitle: string
+  icon?: ReactElement
+  title?: string
+  subtitle?: string
 }
 
 export function CheckoutCoffeeCard({
@@ -18,7 +18,6 @@ export function CheckoutCoffeeCard({
   return (
     <CheckoutCoffeeCardContainer {...rest}>
       <header>
-        {/* <MapPinLine size={22} style={{ color: '#8047F8' }} /> */}
         {icon}
         <div>
           <p className="title">{title}</p>

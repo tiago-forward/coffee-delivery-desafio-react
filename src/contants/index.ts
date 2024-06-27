@@ -13,7 +13,14 @@ import ImageLatte from '../assets/coffee/ImageLatte.svg'
 import ImageMacchiato from '../assets/coffee/ImageMacchiato.svg'
 import ImageMochaccino from '../assets/coffee/ImageMochaccino.svg'
 
-import { ShoppingCart, Package, Timer, Coffee } from 'phosphor-react'
+import {
+  ShoppingCart,
+  Package,
+  Timer,
+  Coffee,
+  MapPin,
+  CurrencyDollar,
+} from 'phosphor-react'
 
 export const coffees = [
   {
@@ -158,5 +165,44 @@ export const itemsQuality = [
     icon: Coffee,
     text: 'O café chega fresquinho até você',
     color: '#8047F8',
+  },
+]
+
+export const successInfo = [
+  {
+    id: 1,
+    icon: MapPin,
+    description:
+      'Entrega em Rua João Daniel Martinelli, 102 Farrapos - Porto Alegre, RS',
+    color: '#8047F8',
+  },
+  {
+    id: 2,
+    icon: Timer,
+    title: 'Previsão de entrega',
+    description: '20 min - 30 min',
+    color: '#DBAC2C',
+  },
+  {
+    id: 3,
+    icon: CurrencyDollar,
+    title: 'Pagamento na entrega',
+    description: 'Cartão de Crédito',
+    color: '#C47F17',
+  },
+]
+
+export const exampleOfCoffee = [
+  {
+    id: 1,
+    image: ImageExpresso,
+    text: 'Expresso Tradicional',
+    value: 9.9,
+  },
+  {
+    id: 2,
+    image: ImageLatte,
+    text: 'Latte',
+    value: 19.8,
   },
 ]
