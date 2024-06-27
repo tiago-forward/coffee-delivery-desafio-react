@@ -18,9 +18,12 @@ export function Intro() {
             const IconComponent = item.icon
             return (
               <li key={item.id}>
-                <button style={{ backgroundColor: item.color }}>
+                <div
+                  className="iconContainer"
+                  style={{ backgroundColor: item.color }}
+                >
                   <IconComponent />
-                </button>
+                </div>
                 <span>{item.text}</span>
               </li>
             )

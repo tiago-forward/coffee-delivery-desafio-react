@@ -40,6 +40,7 @@ export const SelectedCoffeesContainer = styled.div`
   span {
     ${mixins.fonts.textM};
     color: ${(props) => props.theme.colors['base-text']};
+    font-weight: bold;
   }
 `
 
@@ -59,6 +60,25 @@ export const ButtonsContainer = styled.div`
   gap: 0.5rem;
   margin-top: 0.5rem;
   text-transform: capitalize;
+
+  .delete {
+    background-color: ${(props) => props.theme.colors['base-button']};
+    border: none;
+    cursor: pointer;
+    color: ${(props) => props.theme.colors.purple};
+    font-size: 0.875rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    span {
+      ${mixins.fonts.textM};
+      color: ${(props) => props.theme.colors['base-text']};
+    }
+  }
 `
 
 export const PricesCoffeesContainer = styled.div`
@@ -84,11 +104,13 @@ export const PricesCoffeesContainer = styled.div`
   .total {
     ${mixins.fonts.textL};
     color: ${(props) => props.theme.colors['base-subtitle']};
+    font-weight: bold;
   }
 
   .priceTotal {
     ${mixins.fonts.textL};
     color: ${(props) => props.theme.colors['base-subtitle']};
+    font-weight: bold;
   }
 
   button {

@@ -16,9 +16,11 @@ import {
   CreditCard,
   MapPinLine,
   CurrencyDollar,
+  Trash,
 } from 'phosphor-react'
 
 import { exampleOfCoffee } from '../../contants'
+import { FormatCurrency } from '../../utility/FormatCurrency'
 
 interface exampleOfCoffee {
   id: number
@@ -110,26 +112,34 @@ export function Checkout() {
       <section>
         <h2 className="titleSection">Cafés selecionados</h2>
         <CheckoutCoffeeCard>
-          {exampleOfCoffee.map((item) => (
-            <SelectedCoffeesContainer key={item.id}>
-              <SelectedCoffees>
-                <img src={item.image} alt={item.text} width={64} />
-                <div>
-                  <p>{item.text}</p>
-                  <ButtonsContainer>
-                    <InputNumber
-                      coffeeQuantity={1}
-                      setCoffeeQuantity={(qty) =>
-                        console.log(`Set quantity for item ${item.id}: ${qty}`)
-                      }
-                    />
-                    <button>Excluir</button>
-                  </ButtonsContainer>
-                </div>
-              </SelectedCoffees>
-              <span>R$ {item.value}</span>
-            </SelectedCoffeesContainer>
-          ))}
+          {exampleOfCoffee.map((item) => {
+            const formattedPrice = FormatCurrency(item.value)
+            return (
+              <SelectedCoffeesContainer key={item.id}>
+                <SelectedCoffees>
+                  <img src={item.image} alt={item.text} width={64} />
+                  <div>
+                    <p>{item.text}</p>
+                    <ButtonsContainer>
+                      <InputNumber
+                        coffeeQuantity={1}
+                        setCoffeeQuantity={(qty) =>
+                          console.log(
+                            `Set quantity for item ${item.id}: ${qty}`,
+                          )
+                        }
+                      />
+                      <button className="delete">
+                        <Trash />
+                        <span>Excluir</span>
+                      </button>
+                    </ButtonsContainer>
+                  </div>
+                </SelectedCoffees>
+                <span>{formattedPrice}</span>
+              </SelectedCoffeesContainer>
+            )
+          })}
           <PricesCoffeesContainer>
             <div>
               <p>Total de itens</p>

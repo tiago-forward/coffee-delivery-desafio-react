@@ -33,7 +33,7 @@ export const TitleContainer = styled.div`
       gap: 0.75rem;
     }
 
-    button {
+    .iconContainer {
       width: 2.375rem;
       height: 2.375rem;
       color: ${(props) => props.theme.colors.background};

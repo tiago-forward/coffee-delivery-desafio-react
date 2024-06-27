@@ -7,13 +7,14 @@ import {
   CoffeeCardContent,
   PriceContainer,
 } from './styles'
+import { FormatCurrency } from '../../utility/FormatCurrency'
 
 interface CoffeeCardProps {
   image: string
   category: string[]
   name: string
   description: string
-  value: string
+  value: number
 }
 
 export function CoffeeCard({
@@ -24,6 +25,8 @@ export function CoffeeCard({
   value,
 }: CoffeeCardProps) {
   const [coffeeQuantity, setCoffeeQuantity] = useState<number>(1)
+
+  const formattedValue = FormatCurrency(value)
 
   return (
     <CoffeeCardContainer>
@@ -39,7 +42,7 @@ export function CoffeeCard({
       </CoffeeCardContent>
       <PriceContainer>
         <p>
-          R$ <span>{value}</span>
+          R$ <span>{formattedValue}</span>
         </p>
         <InputNumber
           coffeeQuantity={coffeeQuantity}
