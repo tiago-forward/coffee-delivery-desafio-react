@@ -5,11 +5,15 @@ import { GlobalStyle } from './styles/global'
 import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
 
+import { TransactionContextProvider } from './contexts/TransactionContext'
+
 export function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <BrowserRouter>
-        <Router />
+        <TransactionContextProvider>
+          <Router />
+        </TransactionContextProvider>
       </BrowserRouter>
 
       <GlobalStyle />

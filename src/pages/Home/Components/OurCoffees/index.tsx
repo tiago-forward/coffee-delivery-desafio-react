@@ -10,6 +10,7 @@ export function OurCoffees() {
         {coffees.map((coffee) => (
           <li key={coffee.id}>
             <CoffeeCard
+              id={coffee.id}
               image={coffee.image}
               category={coffee.category}
               name={coffee.name}

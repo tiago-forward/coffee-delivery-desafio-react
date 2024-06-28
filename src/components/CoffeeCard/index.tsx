@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import { ButtonCart } from '../ButtonCart'
 import { InputNumber } from '../InputNumber'
 import {
@@ -8,8 +8,10 @@ import {
   PriceContainer,
 } from './styles'
 import { FormatCurrency } from '../../utility/FormatCurrency'
+import { TransactionContext } from '../../contexts/TransactionContext'
 
 interface CoffeeCardProps {
+  id: number
   image: string
   category: string[]
   name: string
@@ -18,15 +20,21 @@ interface CoffeeCardProps {
 }
 
 export function CoffeeCard({
+  id,
   image,
   category,
   name,
   description,
   value,
 }: CoffeeCardProps) {
-  const [coffeeQuantity, setCoffeeQuantity] = useState<number>(1)
+  const { coffeeQuantities, setCoffeeQuantity } = useContext(TransactionContext)
+  const coffeeQuantity = coffeeQuantities[id] || 1
 
   const formattedValue = FormatCurrency(value)
+
+  const handleCoffeeQuantity = (quantity: number) => {
+    setCoffeeQuantity(id, quantity)
+  }
 
   return (
     <CoffeeCardContainer>
@@ -46,7 +54,7 @@ export function CoffeeCard({
         </p>
         <InputNumber
           coffeeQuantity={coffeeQuantity}
-          setCoffeeQuantity={setCoffeeQuantity}
+          setCoffeeQuantity={handleCoffeeQuantity}
         />
         <ButtonCart />
       </PriceContainer>
