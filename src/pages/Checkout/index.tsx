@@ -19,17 +19,13 @@ import {
   Trash,
 } from 'phosphor-react'
 
-import { exampleOfCoffee } from '../../contants'
 import { FormatCurrency } from '../../utility/FormatCurrency'
-
-interface exampleOfCoffee {
-  id: number
-  image: string
-  text: string
-  value: number
-}
+import { TransactionContext } from '../../contexts/TransactionContext'
+import { useContext } from 'react'
 
 export function Checkout() {
+  const { setCoffeeQuantity, selectedCoffees } = useContext(TransactionContext)
+
   return (
     <CheckoutPageContainer>
       <section>
@@ -112,22 +108,24 @@ export function Checkout() {
       <section>
         <h2 className="titleSection">Cafés selecionados</h2>
         <CheckoutCoffeeCard>
-          {exampleOfCoffee.map((item) => {
-            const formattedPrice = FormatCurrency(item.value)
+          {selectedCoffees.map((coffee) => {
+            // const formattedPrice = FormatCurrency()
+            const handleCoffeeQuantity = (quantity: number) => {
+              setCoffeeQuantity(coffee.id, quantity)
+            }
+
+            const formattedValue = FormatCurrency(coffee.value)
+
             return (
-              <SelectedCoffeesContainer key={item.id}>
+              <SelectedCoffeesContainer key={coffee.id}>
                 <SelectedCoffees>
-                  <img src={item.image} alt={item.text} width={64} />
+                  <img src={coffee.image} alt={coffee.title} width={64} />
                   <div>
-                    <p>{item.text}</p>
+                    <p>{coffee.title}</p>
                     <ButtonsContainer>
                       <InputNumber
-                        coffeeQuantity={1}
-                        setCoffeeQuantity={(qty) =>
-                          console.log(
-                            `Set quantity for item ${item.id}: ${qty}`,
-                          )
-                        }
+                        coffeeQuantity={coffee.quantity}
+                        setCoffeeQuantity={handleCoffeeQuantity}
                       />
                       <button className="delete">
                         <Trash />
@@ -136,7 +134,7 @@ export function Checkout() {
                     </ButtonsContainer>
                   </div>
                 </SelectedCoffees>
-                <span>{formattedPrice}</span>
+                <span>{formattedValue}</span>
               </SelectedCoffeesContainer>
             )
           })}

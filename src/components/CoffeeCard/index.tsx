@@ -27,13 +27,18 @@ export function CoffeeCard({
   description,
   value,
 }: CoffeeCardProps) {
-  const { coffeeQuantities, setCoffeeQuantity } = useContext(TransactionContext)
+  const { coffeeQuantities, setCoffeeQuantity, addSelectedCoffee } =
+    useContext(TransactionContext)
   const coffeeQuantity = coffeeQuantities[id] || 1
 
   const formattedValue = FormatCurrency(value)
 
   const handleCoffeeQuantity = (quantity: number) => {
     setCoffeeQuantity(id, quantity)
+  }
+
+  const handleAddToCart = () => {
+    addSelectedCoffee(id, image, name, coffeeQuantity, value)
   }
 
   return (
@@ -50,13 +55,13 @@ export function CoffeeCard({
       </CoffeeCardContent>
       <PriceContainer>
         <p>
-          R$ <span>{formattedValue}</span>
+          <span>{formattedValue}</span>
         </p>
         <InputNumber
           coffeeQuantity={coffeeQuantity}
           setCoffeeQuantity={handleCoffeeQuantity}
         />
-        <ButtonCart />
+        <ButtonCart onClick={handleAddToCart} />
       </PriceContainer>
     </CoffeeCardContainer>
   )

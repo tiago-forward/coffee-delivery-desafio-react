@@ -1,9 +1,12 @@
+import { ButtonHTMLAttributes } from 'react'
 import { ButtonCartContainer } from './styles'
 import { ShoppingCart } from 'phosphor-react'
 
-export function ButtonCart() {
+interface ButtonCartProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+
+export function ButtonCart(props: ButtonCartProps) {
   return (
-    <ButtonCartContainer>
+    <ButtonCartContainer {...props}>
       <ShoppingCart size={22} />
     </ButtonCartContainer>
   )
