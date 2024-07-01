@@ -24,7 +24,7 @@ import { TransactionContext } from '../../contexts/TransactionContext'
 import { useContext } from 'react'
 
 export function Checkout() {
-  const { setCoffeeQuantity, selectedCoffees } = useContext(TransactionContext)
+  const { setCoffeeQuantity, selectedCoffees, onRemoveSelectedCoffee } = useContext(TransactionContext)
 
   return (
     <CheckoutPageContainer>
@@ -114,6 +114,10 @@ export function Checkout() {
               setCoffeeQuantity(coffee.id, quantity)
             }
 
+            const handleRemoveSelectedCoffee = () => {
+              onRemoveSelectedCoffee(coffee.id)
+            }
+
             const formattedValue = FormatCurrency(coffee.value)
 
             return (
@@ -127,7 +131,10 @@ export function Checkout() {
                         coffeeQuantity={coffee.quantity}
                         setCoffeeQuantity={handleCoffeeQuantity}
                       />
-                      <button className="delete">
+                      <button
+                        className="delete"
+                        onClick={handleRemoveSelectedCoffee}
+                      >
                         <Trash />
                         <span>Excluir</span>
                       </button>

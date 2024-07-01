@@ -23,6 +23,7 @@ interface TransactionContextType {
     quantity: number,
     value: number,
   ) => void
+  onRemoveSelectedCoffee: (id: number) => void
 }
 
 export const TransactionContext = createContext({} as TransactionContextType)
@@ -84,6 +85,12 @@ export function TransactionContextProvider({
     })
   }
 
+  const onRemoveSelectedCoffee = (id: number) => {
+    setSelectedCoffees((prevSelectedCoffees) => {
+      return prevSelectedCoffees.filter((item) => item.id !== id)
+    })
+  }
+
   return (
     <TransactionContext.Provider
       value={{
@@ -91,6 +98,7 @@ export function TransactionContextProvider({
         setCoffeeQuantity,
         selectedCoffees,
         addSelectedCoffee,
+        onRemoveSelectedCoffee,
       }}
     >
       {children}
