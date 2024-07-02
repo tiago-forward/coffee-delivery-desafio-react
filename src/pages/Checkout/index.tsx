@@ -24,7 +24,21 @@ import { TransactionContext } from '../../contexts/TransactionContext'
 import { useContext } from 'react'
 
 export function Checkout() {
-  const { setCoffeeQuantity, selectedCoffees, onRemoveSelectedCoffee } = useContext(TransactionContext)
+  const {
+    setCoffeeQuantity,
+    selectedCoffees,
+    onRemoveSelectedCoffee,
+    formattedValueTotal,
+    formattedValueTotalWithShipment,
+  } = useContext(TransactionContext)
+
+  const handleCoffeeQuantity = (id: number, quantity: number) => {
+    setCoffeeQuantity(id, quantity)
+  }
+
+  const handleRemoveSelectedCoffee = (id: number) => {
+    onRemoveSelectedCoffee(id)
+  }
 
   return (
     <CheckoutPageContainer>
@@ -109,15 +123,6 @@ export function Checkout() {
         <h2 className="titleSection">Cafés selecionados</h2>
         <CheckoutCoffeeCard>
           {selectedCoffees.map((coffee) => {
-            // const formattedPrice = FormatCurrency()
-            const handleCoffeeQuantity = (quantity: number) => {
-              setCoffeeQuantity(coffee.id, quantity)
-            }
-
-            const handleRemoveSelectedCoffee = () => {
-              onRemoveSelectedCoffee(coffee.id)
-            }
-
             const formattedValue = FormatCurrency(coffee.value)
 
             return (
@@ -129,11 +134,13 @@ export function Checkout() {
                     <ButtonsContainer>
                       <InputNumber
                         coffeeQuantity={coffee.quantity}
-                        setCoffeeQuantity={handleCoffeeQuantity}
+                        setCoffeeQuantity={(quantity) =>
+                          handleCoffeeQuantity(coffee.id, quantity)
+                        }
                       />
                       <button
                         className="delete"
-                        onClick={handleRemoveSelectedCoffee}
+                        onClick={() => handleRemoveSelectedCoffee(coffee.id)}
                       >
                         <Trash />
                         <span>Excluir</span>
@@ -148,7 +155,7 @@ export function Checkout() {
           <PricesCoffeesContainer>
             <div>
               <p>Total de itens</p>
-              <span>R$ 29,70</span>
+              <span>{formattedValueTotal}</span>
             </div>
             <div>
               <p>Entrega</p>
@@ -156,7 +163,7 @@ export function Checkout() {
             </div>
             <div>
               <p className="total">Total</p>
-              <span className="priceTotal">R$ 33,20</span>
+              <span className="priceTotal">{formattedValueTotalWithShipment}</span>
             </div>
             <button>confirmar pedido</button>
           </PricesCoffeesContainer>

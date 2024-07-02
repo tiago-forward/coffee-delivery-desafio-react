@@ -1,4 +1,5 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useMemo, useState } from 'react'
+import { FormatCurrency } from '../utility/FormatCurrency'
 
 interface CoffeeQuantityProps {
   [id: number]: number
@@ -14,8 +15,10 @@ export interface SelectedCoffeesProps {
 
 interface TransactionContextType {
   coffeeQuantities: CoffeeQuantityProps
-  setCoffeeQuantity: (id: number, value: number) => void
   selectedCoffees: SelectedCoffeesProps[]
+  formattedValueTotal: string
+  formattedValueTotalWithShipment: string
+  setCoffeeQuantity: (id: number, value: number) => void
   addSelectedCoffee: (
     id: number,
     image: string,
@@ -91,6 +94,13 @@ export function TransactionContextProvider({
     })
   }
 
+  const totalItemsInCart = useMemo(() => {
+    return selectedCoffees.reduce((total, coffee) => total + coffee.value, 0)
+  }, [selectedCoffees])
+
+  const formattedValueTotal = FormatCurrency(totalItemsInCart)
+  const formattedValueTotalWithShipment = FormatCurrency(totalItemsInCart + 3.5)
+
   return (
     <TransactionContext.Provider
       value={{
@@ -99,6 +109,8 @@ export function TransactionContextProvider({
         selectedCoffees,
         addSelectedCoffee,
         onRemoveSelectedCoffee,
+        formattedValueTotal,
+        formattedValueTotalWithShipment,
       }}
     >
       {children}
