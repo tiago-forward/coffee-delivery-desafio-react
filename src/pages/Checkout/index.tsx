@@ -163,7 +163,9 @@ export function Checkout() {
             </div>
             <div>
               <p className="total">Total</p>
-              <span className="priceTotal">{formattedValueTotalWithShipment}</span>
+              <span className="priceTotal">
+                {formattedValueTotalWithShipment}
+              </span>
             </div>
             <button>confirmar pedido</button>
           </PricesCoffeesContainer>
