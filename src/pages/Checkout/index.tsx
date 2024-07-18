@@ -123,7 +123,9 @@ export function Checkout() {
         <h2 className="titleSection">Cafés selecionados</h2>
         <CheckoutCoffeeCard>
           {selectedCoffees.map((coffee) => {
-            const formattedValue = FormatCurrency(coffee.value)
+            const formattedValue = FormatCurrency(
+              coffee.value * coffee.quantity,
+            )
 
             return (
               <SelectedCoffeesContainer key={coffee.id}>

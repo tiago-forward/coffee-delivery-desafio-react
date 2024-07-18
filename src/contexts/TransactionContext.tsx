@@ -18,7 +18,7 @@ interface TransactionContextType {
   selectedCoffees: SelectedCoffeesProps[]
   formattedValueTotal: string
   formattedValueTotalWithShipment: string
-  setCoffeeQuantity: (id: number, value: number) => void
+  setCoffeeQuantity: (id: number, quantity: number) => void
   addSelectedCoffee: (
     id: number,
     image: string,
@@ -45,11 +45,16 @@ export function TransactionContextProvider({
     SelectedCoffeesProps[]
   >([])
 
-  const setCoffeeQuantity = (id: number, value: number) => {
-    setCoffeeQuantities((state) => {
-      const existingValue = state[id] || 0
-      return { ...state, [id]: existingValue + value }
-    })
+  const setCoffeeQuantity = (id: number, quantity: number) => {
+    setSelectedCoffees((prevSelectedCoffees) =>
+      prevSelectedCoffees.map((coffee) =>
+        coffee.id === id ? { ...coffee, quantity } : coffee,
+      ),
+    )
+    setCoffeeQuantities((state) => ({
+      ...state,
+      [id]: quantity,
+    }))
   }
 
   const addSelectedCoffee = (
@@ -95,7 +100,10 @@ export function TransactionContextProvider({
   }
 
   const totalItemsInCart = useMemo(() => {
-    return selectedCoffees.reduce((total, coffee) => total + coffee.value, 0)
+    return selectedCoffees.reduce(
+      (total, coffee) => total + coffee.quantity * coffee.value,
+      0,
+    )
   }, [selectedCoffees])
 
   const formattedValueTotal = FormatCurrency(totalItemsInCart)

@@ -38,7 +38,7 @@ export function InputNumber({
       <input
         type="number"
         value={coffeeQuantity}
-        min={0}
+        min={1}
         onChange={handleValueInput}
       />
       <button onClick={handleIncrement}>
