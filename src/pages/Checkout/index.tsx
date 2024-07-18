@@ -122,55 +122,61 @@ export function Checkout() {
       <section>
         <h2 className="titleSection">Cafés selecionados</h2>
         <CheckoutCoffeeCard>
-          {selectedCoffees.map((coffee) => {
-            const formattedValue = FormatCurrency(
-              coffee.value * coffee.quantity,
-            )
+          {selectedCoffees.length === 0 ? (
+            <p>Não há cafés selecionados!</p>
+          ) : (
+            selectedCoffees.map((coffee) => {
+              const formattedValue = FormatCurrency(
+                coffee.value * coffee.quantity,
+              )
 
-            return (
-              <SelectedCoffeesContainer key={coffee.id}>
-                <SelectedCoffees>
-                  <img src={coffee.image} alt={coffee.title} width={64} />
-                  <div>
-                    <p>{coffee.title}</p>
-                    <ButtonsContainer>
-                      <InputNumber
-                        coffeeQuantity={coffee.quantity}
-                        setCoffeeQuantity={(quantity) =>
-                          handleCoffeeQuantity(coffee.id, quantity)
-                        }
-                      />
-                      <button
-                        className="delete"
-                        onClick={() => handleRemoveSelectedCoffee(coffee.id)}
-                      >
-                        <Trash />
-                        <span>Excluir</span>
-                      </button>
-                    </ButtonsContainer>
-                  </div>
-                </SelectedCoffees>
-                <span>{formattedValue}</span>
-              </SelectedCoffeesContainer>
-            )
-          })}
-          <PricesCoffeesContainer>
-            <div>
-              <p>Total de itens</p>
-              <span>{formattedValueTotal}</span>
-            </div>
-            <div>
-              <p>Entrega</p>
-              <span>R$ 3,50</span>
-            </div>
-            <div>
-              <p className="total">Total</p>
-              <span className="priceTotal">
-                {formattedValueTotalWithShipment}
-              </span>
-            </div>
-            <button>confirmar pedido</button>
-          </PricesCoffeesContainer>
+              return (
+                <SelectedCoffeesContainer key={coffee.id}>
+                  <SelectedCoffees>
+                    <img src={coffee.image} alt={coffee.title} width={64} />
+                    <div>
+                      <p>{coffee.title}</p>
+                      <ButtonsContainer>
+                        <InputNumber
+                          coffeeQuantity={coffee.quantity}
+                          setCoffeeQuantity={(quantity) =>
+                            handleCoffeeQuantity(coffee.id, quantity)
+                          }
+                        />
+                        <button
+                          className="delete"
+                          onClick={() => handleRemoveSelectedCoffee(coffee.id)}
+                        >
+                          <Trash />
+                          <span>Excluir</span>
+                        </button>
+                      </ButtonsContainer>
+                    </div>
+                  </SelectedCoffees>
+                  <span>{formattedValue}</span>
+                </SelectedCoffeesContainer>
+              )
+            })
+          )}
+          {selectedCoffees.length > 0 && (
+            <PricesCoffeesContainer>
+              <div>
+                <p>Total de itens</p>
+                <span>{formattedValueTotal}</span>
+              </div>
+              <div>
+                <p>Entrega</p>
+                <span>R$ 3,50</span>
+              </div>
+              <div>
+                <p className="total">Total</p>
+                <span className="priceTotal">
+                  {formattedValueTotalWithShipment}
+                </span>
+              </div>
+              <button>confirmar pedido</button>
+            </PricesCoffeesContainer>
+          )}
         </CheckoutCoffeeCard>
       </section>
     </CheckoutPageContainer>
