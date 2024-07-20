@@ -14,10 +14,10 @@ export const InputTextContainer = styled.input`
   border-radius: 4px;
 
   ${mixins.fonts.textS};
-  background-color: ${(props) => props.theme.colors['base-input']};
-  color: ${(props) => props.theme.colors['base-text']};
+  background-color: ${({ theme }) => theme.colors['base-input']};
+  color: ${({ theme }) => theme.colors['base-text']};
 
   &::placeholder {
-    color: ${(props) => props.theme.colors['base-label']};
+    color: ${({ theme }) => theme.colors['base-label']};
   }
 `

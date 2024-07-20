@@ -1,15 +1,18 @@
 import { InputNumber } from '../../components/InputNumber'
 import { CheckoutCoffeeCard } from './Components/CoffeeCard'
-import { InputText } from './Components/InputText'
-import { PaymentCard } from './Components/PaymentCard'
+import { Input } from './Components/Input'
+import { InputPaymentCard } from './Components/InputPaymentCard'
+
 import {
   ButtonsContainer,
   CheckoutPageContainer,
+  ErrorMessage,
   PaymentCardContainer,
   PricesCoffeesContainer,
   SelectedCoffees,
   SelectedCoffeesContainer,
 } from './styles'
+
 import {
   Money,
   Bank,
@@ -21,7 +24,34 @@ import {
 
 import { FormatCurrency } from '../../utility/FormatCurrency'
 import { TransactionContext } from '../../contexts/TransactionContext'
+
 import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
+
+import { useNavigate } from 'react-router-dom'
+
+const newAddressFormValidationSchema = zod.object({
+  cep: zod
+    .string()
+    .regex(/^\d{5}-\d{3}$/, 'Insira um CEP com o formato correto (#####-###).'),
+  road: zod.string().trim().min(3, 'É necessário no mínimo 3 caracteres.'),
+  number: zod.preprocess(
+    (value) => Number(value),
+    zod.number().min(1, 'O número é obrigatório.'),
+  ),
+  complement: zod.string().optional(),
+  neighborhood: zod
+    .string()
+    .trim()
+    .min(3, 'É necessário no mínimo 3 caracteres.'),
+  city: zod.string().trim().min(3, 'É necessário no mínimo 3 caracteres.'),
+  country: zod.string().trim().min(2, 'É necessário no mínimo 2 caracteres.'),
+  paymentMethod: zod.string().nonempty('Selecione um método de pagamento.'),
+})
+
+type NewAddressData = zod.infer<typeof newAddressFormValidationSchema>
 
 export function Checkout() {
   const {
@@ -40,11 +70,39 @@ export function Checkout() {
     onRemoveSelectedCoffee(id)
   }
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm<NewAddressData>({
+    resolver: zodResolver(newAddressFormValidationSchema),
+    defaultValues: {
+      cep: '',
+      road: '',
+      number: undefined,
+      complement: '',
+      neighborhood: '',
+      city: '',
+      country: '',
+      paymentMethod: '',
+    },
+  })
+
+  const navigate = useNavigate()
+
+  function handleRegisteredAddress(data: NewAddressData) {
+    navigate('/success', { state: { ...data } })
+  }
+
+  const paymentMethod = watch('paymentMethod')
+
   return (
     <CheckoutPageContainer>
       <section>
         <h2 className="titleSection">Complete seu pedido</h2>
-        <form action="">
+        <form id="address" onSubmit={handleSubmit(handleRegisteredAddress)}>
           <CheckoutCoffeeCard
             icon={<MapPinLine size={22} style={{ color: '#C47F17' }} />}
             title={'Endereço de Entrega'}
@@ -57,44 +115,121 @@ export function Checkout() {
                 gap: '1.063rem',
               }}
             >
-              <InputText
+              <Input
+                id="cep"
                 containerProps={{ style: { width: '200px' } }}
                 type="text"
                 placeholder="CEP"
+                {...register('cep')}
               />
-              <InputText
+              {errors.cep && (
+                <ErrorMessage>
+                  {errors.cep.message?.toString() ?? 'Erro desconhecido'}
+                </ErrorMessage>
+              )}
+              <Input
+                id="road"
                 containerProps={{ style: { width: '100%' } }}
                 type="text"
                 placeholder="Rua"
+                {...register('road')}
               />
+              {errors.road && (
+                <ErrorMessage>
+                  {errors.road.message?.toString() ?? 'Erro desconhecido'}
+                </ErrorMessage>
+              )}
               <div style={{ display: 'flex', gap: '0.75rem' }}>
-                <InputText
-                  containerProps={{ style: { width: '200px' } }}
-                  type="text"
-                  placeholder="Número"
-                />
-                <InputText
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <Input
+                    id="number"
+                    containerProps={{ style: { width: '200px' } }}
+                    placeholder="Número"
+                    {...register('number', { valueAsNumber: true })}
+                  />
+                  {errors.number && (
+                    <ErrorMessage>
+                      {errors.number.message?.toString() ?? 'Erro desconhecido'}
+                    </ErrorMessage>
+                  )}
+                </div>
+                <Input
+                  id="complement"
                   containerProps={{ style: { width: '100%' } }}
                   type="text"
                   placeholder="Complemento"
+                  {...register('complement')}
                 />
               </div>
               <div style={{ display: 'flex', gap: '0.75rem' }}>
-                <InputText
-                  containerProps={{ style: { width: '200px' } }}
-                  type="text"
-                  placeholder="Bairro"
-                />
-                <InputText
-                  containerProps={{ style: { width: '100%' } }}
-                  type="text"
-                  placeholder="Cidade"
-                />
-                <InputText
-                  containerProps={{ style: { width: '60px' } }}
-                  type="text"
-                  placeholder="UF"
-                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <Input
+                    id="neighborhood"
+                    containerProps={{ style: { width: '200px' } }}
+                    type="text"
+                    placeholder="Bairro"
+                    {...register('neighborhood')}
+                  />
+                  {errors.neighborhood && (
+                    <ErrorMessage>
+                      {errors.neighborhood.message?.toString() ??
+                        'Erro desconhecido'}
+                    </ErrorMessage>
+                  )}
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <Input
+                    id="city"
+                    containerProps={{ style: { width: '100%' } }}
+                    type="text"
+                    placeholder="Cidade"
+                    {...register('city')}
+                  />
+                  {errors.city && (
+                    <ErrorMessage>
+                      {errors.city.message?.toString() ?? 'Erro desconhecido'}
+                    </ErrorMessage>
+                  )}
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <Input
+                    id="country"
+                    containerProps={{ style: { width: '60px' } }}
+                    type="text"
+                    placeholder="UF"
+                    {...register('country')}
+                  />
+                  {errors.country && (
+                    <ErrorMessage>
+                      {errors.country.message?.toString() ??
+                        'Erro desconhecido'}
+                    </ErrorMessage>
+                  )}
+                </div>
               </div>
             </div>
           </CheckoutCoffeeCard>
@@ -106,16 +241,49 @@ export function Checkout() {
             }
           >
             <PaymentCardContainer>
-              <PaymentCard select={'Cartão de crédito'}>
+              <InputPaymentCard
+                select={'Cartão de crédito'}
+                isSelected={paymentMethod === 'credit'}
+              >
+                <input
+                  type="radio"
+                  value="credit"
+                  id="paymentCardCredit"
+                  onChange={() => setValue('paymentMethod', 'credit')}
+                  checked={paymentMethod === 'credit'}
+                />
                 <CreditCard size={16} style={{ color: '#8047F8' }} />
-              </PaymentCard>
-              <PaymentCard select={'Cartão de débito'}>
+              </InputPaymentCard>
+              <InputPaymentCard
+                select={'Cartão de débito'}
+                isSelected={paymentMethod === 'debit'}
+              >
+                <input
+                  type="radio"
+                  value="debit"
+                  id="paymentCardDebit"
+                  onChange={() => setValue('paymentMethod', 'debit')}
+                  checked={paymentMethod === 'debit'}
+                />
                 <Bank size={16} style={{ color: '#8047F8' }} />
-              </PaymentCard>
-              <PaymentCard select={'Dinheiro'}>
+              </InputPaymentCard>
+              <InputPaymentCard
+                select={'Dinheiro'}
+                isSelected={paymentMethod === 'cash'}
+              >
+                <input
+                  type="radio"
+                  value="cash"
+                  id="paymentCardCash"
+                  onChange={() => setValue('paymentMethod', 'cash')}
+                  checked={paymentMethod === 'cash'}
+                />
                 <Money size={16} style={{ color: '#8047F8' }} />
-              </PaymentCard>
+              </InputPaymentCard>
             </PaymentCardContainer>
+            {errors.paymentMethod && (
+              <ErrorMessage>Selecione um método de pamento!</ErrorMessage>
+            )}
           </CheckoutCoffeeCard>
         </form>
       </section>
@@ -174,7 +342,9 @@ export function Checkout() {
                   {formattedValueTotalWithShipment}
                 </span>
               </div>
-              <button>confirmar pedido</button>
+              <button type="submit" form="address">
+                confirmar pedido
+              </button>
             </PricesCoffeesContainer>
           )}
         </CheckoutCoffeeCard>

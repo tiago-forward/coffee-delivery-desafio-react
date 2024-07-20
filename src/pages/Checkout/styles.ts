@@ -123,3 +123,25 @@ export const PricesCoffeesContainer = styled.div`
     text-transform: uppercase;
   }
 `
+export const PaymentOptions = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+`
+
+export const PaymentErrorMessage = styled.p`
+  ${mixins.fonts.textXS};
+  font-weight: 400;
+  color: red;
+`
+
+export const ErrorMessage = styled.span`
+  color: #9a0404;
+`
