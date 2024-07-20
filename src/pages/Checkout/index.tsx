@@ -243,40 +243,42 @@ export function Checkout() {
             <PaymentCardContainer>
               <InputPaymentCard
                 select={'Cartão de crédito'}
-                isSelected={paymentMethod === 'credit'}
+                isSelected={paymentMethod === 'Cartão de crédito'}
               >
                 <input
                   type="radio"
-                  value="credit"
+                  value="Cartão de crédito"
                   id="paymentCardCredit"
-                  onChange={() => setValue('paymentMethod', 'credit')}
-                  checked={paymentMethod === 'credit'}
+                  onChange={() =>
+                    setValue('paymentMethod', 'Cartão de crédito')
+                  }
+                  checked={paymentMethod === 'Cartão de crédito'}
                 />
                 <CreditCard size={16} style={{ color: '#8047F8' }} />
               </InputPaymentCard>
               <InputPaymentCard
                 select={'Cartão de débito'}
-                isSelected={paymentMethod === 'debit'}
+                isSelected={paymentMethod === 'Cartão de débito'}
               >
                 <input
                   type="radio"
-                  value="debit"
+                  value="Cartão de débito"
                   id="paymentCardDebit"
-                  onChange={() => setValue('paymentMethod', 'debit')}
-                  checked={paymentMethod === 'debit'}
+                  onChange={() => setValue('paymentMethod', 'Cartão de débito')}
+                  checked={paymentMethod === 'Cartão de débito'}
                 />
                 <Bank size={16} style={{ color: '#8047F8' }} />
               </InputPaymentCard>
               <InputPaymentCard
                 select={'Dinheiro'}
-                isSelected={paymentMethod === 'cash'}
+                isSelected={paymentMethod === 'Dinheiro'}
               >
                 <input
                   type="radio"
-                  value="cash"
+                  value="Dinheiro"
                   id="paymentCardCash"
-                  onChange={() => setValue('paymentMethod', 'cash')}
-                  checked={paymentMethod === 'cash'}
+                  onChange={() => setValue('paymentMethod', 'Dinheiro')}
+                  checked={paymentMethod === 'Dinheiro'}
                 />
                 <Money size={16} style={{ color: '#8047F8' }} />
               </InputPaymentCard>

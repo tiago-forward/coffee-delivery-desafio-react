@@ -1,9 +1,38 @@
-import { successInfo } from '../../contants'
+// import { successInfo } from '../../contants'
 import { SuccessContainer } from './styles'
 
 import Illustration from '../../assets/Illustration.svg'
 
+import { useLocation } from 'react-router-dom'
+import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
+
 export function Success() {
+  const location = useLocation()
+  const { state } = location
+
+  const successInfo = [
+    {
+      id: 1,
+      icon: MapPin,
+      description: `Entrega em ${state.road}, ${state.number} ${state.neighborhood} - ${state.city}, ${state.country}`,
+      color: '#8047F8',
+    },
+    {
+      id: 2,
+      icon: Timer,
+      title: 'Previsão de entrega',
+      description: '20 min - 30 min',
+      color: '#DBAC2C',
+    },
+    {
+      id: 3,
+      icon: CurrencyDollar,
+      title: 'Pagamento na entrega',
+      description: state.paymentMethod,
+      color: '#C47F17',
+    },
+  ]
+
   return (
     <SuccessContainer>
       <section>
